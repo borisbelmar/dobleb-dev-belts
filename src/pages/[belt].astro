@@ -33,37 +33,13 @@ export const getStaticPaths = (async () => {
   });
 }) satisfies GetStaticPaths;
 
-const { belt, label, description, name, guides, allBelts } = Astro.props;
-
-const otherBelts = Object.entries(allBelts)
-  .filter(([slug]) => slug !== belt)
-  .map(([slug, data]) => ({
-    slug,
-    ...data,
-  }));
+const { belt, label, description, name, guides } = Astro.props;
 ---
 
-<BaseLayout title={`${label} — devBelts`} description={description}>
-  <nav class="border-b border-terminal-dim bg-terminal-darker">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16">
-        <a href="/" class="font-mono font-bold text-lg tracking-tight">
-          <span class="text-terminal-green">$</span> devBelts
-        </a>
-        <div class="hidden md:flex items-center gap-6 font-mono text-sm">
-          {otherBelts.map((b) => (
-            <a href={`/${b.slug}`} class="text-terminal-white hover:text-terminal-dim transition-colors">
-              {b.label}
-            </a>
-          ))}
-        </div>
-      </div>
-    </div>
-  </nav>
-
+<BaseLayout title={`${label} — devBelts`} description={description} currentPath={`/${belt}`}>
   <header class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-    <div class="font-mono text-terminal-dim text-sm tracking-widest uppercase mb-2">{name}</div>
-    <h1 class="font-mono text-3xl sm:text-4xl font-bold text-terminal-white tracking-tight mb-3">{label}</h1>
+    <div class="font-mono text-terminal-gray text-sm tracking-widest uppercase mb-2">{name}</div>
+    <h1 class="glitch font-mono text-3xl sm:text-4xl font-bold text-terminal-white tracking-tight mb-3" data-text={label}>{label}</h1>
     <p class="text-terminal-gray text-lg">{description}</p>
     <div class="mt-2 font-mono text-xs text-terminal-dim">{guides.length} {guides.length === 1 ? 'guide' : 'guides'}</div>
   </header>

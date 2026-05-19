@@ -16,9 +16,41 @@
   --font-family-mono: "JetBrains Mono", monospace;
 }
 
+/* Light mode — override CSS custom properties */
+html:not(.dark) {
+  --color-terminal-black: #FAFAFA;
+  --color-terminal-dark: #F0F0F0;
+  --color-terminal-darker: #E8E8E8;
+  --color-terminal-green: #00802B;
+  --color-terminal-dim: #006622;
+  --color-terminal-white: #1A1A1A;
+  --color-terminal-gray: #555555;
+  --color-terminal-error: #CC0000;
+  --color-terminal-warning: #CC9900;
+  --color-terminal-info: #0066CC;
+
+  --astro-code-color-text: #1A1A1A;
+  --astro-code-color-background: #E8E8E8;
+  --astro-code-foreground: #1A1A1A;
+  --astro-code-background: #E8E8E8;
+  --astro-code-token-constant: #0066CC;
+  --astro-code-token-string: #CC9900;
+  --astro-code-token-comment: #888888;
+  --astro-code-token-keyword: #00802B;
+  --astro-code-token-parameter: #1A1A1A;
+  --astro-code-token-function: #006622;
+  --astro-code-token-string-expression: #CC9900;
+  --astro-code-token-punctuation: #555555;
+  --astro-code-token-link: #00802B;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 /*
  * Shiki syntax highlighting — css-variables theme
- * Color palette matching terminal aesthetic
+ * Dark mode defaults
  */
 :root {
   --astro-code-color-text: #E0E0E0;
@@ -36,10 +68,139 @@
   --astro-code-token-link: #00FF41;
 }
 
-/*
- * Terminal typography for guide content
- * No prose plugin needed — custom styles match the hacker/GLITCH aesthetic
- */
+/* Smooth theme transitions */
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ===== Glitch effect for H1/H2 ===== */
+.glitch {
+  position: relative;
+}
+
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.glitch::before {
+  left: 2px;
+  text-shadow: -2px 0 var(--glitch-before-shadow, rgba(255, 0, 0, 0.4));
+  clip: rect(24px, 550px, 90px, 0);
+  animation: glitch-anim 3s infinite linear alternate-reverse;
+}
+
+.glitch::after {
+  left: -2px;
+  text-shadow: 2px 0 var(--glitch-after-shadow, rgba(0, 255, 255, 0.4));
+  clip: rect(85px, 550px, 140px, 0);
+  animation: glitch-anim2 2.5s infinite linear alternate-reverse;
+}
+
+html:not(.dark) .glitch::before {
+  --glitch-before-shadow: rgba(204, 0, 0, 0.5);
+}
+
+html:not(.dark) .glitch::after {
+  --glitch-after-shadow: rgba(0, 102, 204, 0.5);
+}
+
+@keyframes glitch-anim {
+  0% { clip: rect(42px, 9999px, 44px, 0); }
+  5% { clip: rect(12px, 9999px, 59px, 0); }
+  10% { clip: rect(48px, 9999px, 29px, 0); }
+  15% { clip: rect(42px, 9999px, 73px, 0); }
+  20% { clip: rect(63px, 9999px, 27px, 0); }
+  25% { clip: rect(34px, 9999px, 55px, 0); }
+  30% { clip: rect(85px, 9999px, 54px, 0); }
+  35% { clip: rect(20px, 9999px, 27px, 0); }
+  40% { clip: rect(63px, 9999px, 47px, 0); }
+  45% { clip: rect(25px, 9999px, 75px, 0); }
+  50% { clip: rect(60px, 9999px, 29px, 0); }
+  55% { clip: rect(15px, 9999px, 77px, 0); }
+  60% { clip: rect(55px, 9999px, 44px, 0); }
+  65% { clip: rect(82px, 9999px, 30px, 0); }
+  70% { clip: rect(34px, 9999px, 61px, 0); }
+  75% { clip: rect(66px, 9999px, 19px, 0); }
+  80% { clip: rect(75px, 9999px, 59px, 0); }
+  85% { clip: rect(40px, 9999px, 25px, 0); }
+  90% { clip: rect(62px, 9999px, 48px, 0); }
+  95% { clip: rect(10px, 9999px, 85px, 0); }
+  100% { clip: rect(54px, 9999px, 24px, 0); }
+}
+
+@keyframes glitch-anim2 {
+  0% { clip: rect(65px, 9999px, 99px, 0); }
+  5% { clip: rect(52px, 9999px, 20px, 0); }
+  10% { clip: rect(79px, 9999px, 15px, 0); }
+  15% { clip: rect(75px, 9999px, 89px, 0); }
+  20% { clip: rect(28px, 9999px, 39px, 0); }
+  25% { clip: rect(100px, 9999px, 51px, 0); }
+  30% { clip: rect(39px, 9999px, 99px, 0); }
+  35% { clip: rect(49px, 9999px, 59px, 0); }
+  40% { clip: rect(99px, 9999px, 39px, 0); }
+  45% { clip: rect(79px, 9999px, 20px, 0); }
+  50% { clip: rect(69px, 9999px, 12px, 0); }
+  55% { clip: rect(79px, 9999px, 39px, 0); }
+  60% { clip: rect(20px, 9999px, 79px, 0); }
+  65% { clip: rect(49px, 9999px, 99px, 0); }
+  70% { clip: rect(19px, 9999px, 59px, 0); }
+  75% { clip: rect(79px, 9999px, 39px, 0); }
+  80% { clip: rect(49px, 9999px, 29px, 0); }
+  85% { clip: rect(20px, 9999px, 59px, 0); }
+  90% { clip: rect(79px, 9999px, 99px, 0); }
+  95% { clip: rect(10px, 9999px, 39px, 0); }
+  100% { clip: rect(39px, 9999px, 79px, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glitch::before,
+  .glitch::after {
+    animation: none !important;
+    display: none !important;
+  }
+}
+
+/* ===== Scanlines ===== */
+.scanlines::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0) 50%,
+    rgba(0, 0, 0, 0.03) 50%,
+    rgba(0, 0, 0, 0.03)
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 50;
+}
+
+/* ===== Terminal cursor blink ===== */
+.cursor-blink::after {
+  content: '\2588';
+  animation: blink 1s step-end infinite;
+  color: var(--cursor-color, var(--color-terminal-green));
+  margin-left: 2px;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+/* ===== Guide content styles ===== */
 .guide-content {
   color: var(--color-terminal-white);
   line-height: 1.75;

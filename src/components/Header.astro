@@ -1,0 +1,120 @@
+---
+import { cn } from '../lib/utils';
+import ThemeToggle from './ThemeToggle.astro';
+
+interface Props {
+  currentPath?: string;
+}
+
+const { currentPath } = Astro.props;
+const navLinks = [
+  { href: '/', label: 'Home' },
+  { href: '/glossary', label: 'Glosario' },
+];
+---
+
+<header class="border-b border-terminal-dim/30 bg-terminal-black/80 backdrop-blur-sm sticky top-0 z-40">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-14 sm:h-16">
+      <a href="/" class="font-mono font-bold text-base sm:text-lg tracking-tight flex items-center gap-1.5">
+        <span class="text-terminal-green">$</span>
+        <span class="text-terminal-white hover:text-terminal-green transition-colors">devBelts</span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-6 font-mono text-sm">
+        {navLinks.map((link) => (
+          <a
+            href={link.href}
+            class={cn(
+              'transition-colors',
+              currentPath === link.href
+                ? 'text-terminal-green border-b border-terminal-green'
+                : 'text-terminal-white hover:text-terminal-green',
+            )}
+          >
+            {link.label}
+          </a>
+        ))}
+        <ThemeToggle />
+      </nav>
+
+      <button
+        id="hamburger-btn"
+        class="md:hidden flex items-center justify-center w-9 h-9 text-terminal-gray hover:text-terminal-green transition-colors cursor-pointer"
+        aria-label="Toggle navigation menu"
+      >
+        <svg id="hamburger-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+        <svg id="close-icon" class="hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="mobile-menu" class="md:hidden fixed inset-0 z-50 translate-x-full transition-transform duration-300">
+    <div id="mobile-overlay" class="absolute inset-0 bg-black/60"></div>
+    <div class="relative ml-auto w-64 sm:w-72 h-full bg-terminal-dark border-l border-terminal-dim/30 p-6">
+      <div class="flex flex-col gap-4 font-mono text-sm">
+        {navLinks.map((link) => (
+          <a
+            href={link.href}
+            class={cn(
+              'transition-colors py-2',
+              currentPath === link.href
+                ? 'text-terminal-green'
+                : 'text-terminal-white hover:text-terminal-green',
+            )}
+          >
+            <span class="text-terminal-green">&gt;</span> {link.label}
+          </a>
+        ))}
+        <div class="mt-4 pt-4 border-t border-terminal-dim/30">
+          <ThemeToggle />
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  (() => {
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const overlay = document.getElementById('mobile-overlay');
+    const hamburgerIcon = document.getElementById('hamburger-icon');
+    const closeIcon = document.getElementById('close-icon');
+
+    function openMenu() {
+      mobileMenu?.classList.remove('translate-x-full');
+      mobileMenu?.classList.add('translate-x-0');
+      hamburgerIcon?.classList.add('hidden');
+      closeIcon?.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+      mobileMenu?.classList.add('translate-x-full');
+      mobileMenu?.classList.remove('translate-x-0');
+      hamburgerIcon?.classList.remove('hidden');
+      closeIcon?.classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    hamburgerBtn?.addEventListener('click', () => {
+      const isOpen = mobileMenu?.classList.contains('translate-x-0');
+      if (isOpen) closeMenu();
+      else openMenu();
+    });
+
+    overlay?.addEventListener('click', closeMenu);
+
+    document.querySelectorAll('#mobile-menu a').forEach((link) => {
+      link.addEventListener('click', closeMenu);
+    });
+  })();
+</script>

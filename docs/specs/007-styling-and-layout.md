@@ -1,6 +1,6 @@
 # Spec 007: Styling and Layout
 
-**State:** draft
+**State:** done
 
 ## Context
 
