@@ -10,7 +10,7 @@
 | 4 | Algoritmos y estructuras de datos básicas | algoritmos-y-estructuras-de-datos | published |
 | 5 | Tu primer programa en Python | tu-primer-programa-en-python | published |
 | 6 | Control de flujo, funciones y módulos en Python | control-de-flujo-funciones-y-modulos | published |
-| 7 | Manejo de errores y debugging básico | manejo-de-errores-y-debugging | planned |
-| 8 | Git y control de versiones desde cero | git-y-control-de-versiones | planned |
-| 9 | La terminal: tu nueva mejor amiga | la-terminal | planned |
-| 10 | Introducción a la IA: LLMs, asistentes y cómo usarlos bien | introduccion-a-la-ia | planned |
+| 7 | Manejo de errores y debugging básico | manejo-de-errores-y-debugging | published |
+| 8 | Git y control de versiones desde cero | git-y-control-de-versiones | published |
+| 9 | La terminal: tu nueva mejor amiga | la-terminal | published |
+| 10 | Introducción a la IA: LLMs, asistentes y cómo usarlos bien | introduccion-a-la-ia | published |
