@@ -42,7 +42,7 @@ const { name, label, description, count, href, belt, class: className } = Astro.
 
 <a
   href={href}
-  class={cn(beltCardVariants({ belt }), className)}
+  class={cn(beltCardVariants({ belt }), 'relative pb-12', className)}
 >
   <div class="font-mono text-xs uppercase tracking-widest text-terminal-gray mb-2">{name}</div>
   <div class="flex items-center gap-2 mb-3">
@@ -50,5 +50,5 @@ const { name, label, description, count, href, belt, class: className } = Astro.
     <h3 class="font-sans font-semibold text-lg text-terminal-white">{label}</h3>
   </div>
   <p class="text-terminal-gray text-sm leading-relaxed">{description}</p>
-  <div class="mt-4 font-mono text-xs text-terminal-dim">{count} {count === 1 ? 'guide' : 'guides'}</div>
+  <div class="absolute bottom-4 left-4 font-mono text-xs text-terminal-dim">{count} {count === 1 ? 'guía' : 'guías'}</div>
 </a>

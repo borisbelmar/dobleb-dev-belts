@@ -1,6 +1,6 @@
 # Spec 010: Contador de Guías en Español
 
-**State:** draft
+**State:** done
 
 ## Context
 

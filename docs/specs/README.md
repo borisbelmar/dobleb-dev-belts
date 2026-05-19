@@ -11,5 +11,5 @@
 | 007 | [styling-and-layout](007-styling-and-layout.md) | draft | frontend |
 | 008 | [fix-glossary-header](008-fix-glossary-header.md) | done | frontend |
 | 009 | [about-page](009-about-page.md) | done | frontend |
-| 010 | [spanish-guide-counts](010-spanish-guide-counts.md) | draft | frontend |
+| 010 | [spanish-guide-counts](010-spanish-guide-counts.md) | done | frontend |
 | 011 | [last-revision-date](011-last-revision-date.md) | draft | frontend, content |
