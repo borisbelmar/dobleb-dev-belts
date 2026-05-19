@@ -1,0 +1,96 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import RelatedGuides from '@/components/RelatedGuides.astro';
+import TagList from '@/components/TagList.astro';
+import { getCollection, getEntry, render } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+
+export const getStaticPaths = (async () => {
+  const entries = await getCollection('glossary');
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+  }));
+}) satisfies GetStaticPaths;
+
+const { slug } = Astro.params;
+const entry = (await getEntry('glossary', slug!))!;
+
+const relatedGuides = await Promise.all(
+  (entry.data.relatedGuides || []).map(async (id: string) => {
+    const guide = await getEntry('guides', id);
+    return guide
+      ? { title: guide.data.title, description: guide.data.description, id: guide.id }
+      : null;
+  }),
+);
+
+const resolvedRelatedGuides = relatedGuides.filter(Boolean) as {
+  title: string;
+  description: string;
+  id: string;
+}[];
+
+const { Content } = await render(entry);
+---
+
+<BaseLayout
+  title={`${entry.data.term} — devBelts Glossary`}
+  description={entry.data.definition}
+>
+  <nav class="border-b border-terminal-dim bg-terminal-darker">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <a href="/" class="font-mono font-bold text-lg tracking-tight">
+          <span class="text-terminal-green">$</span> devBelts
+        </a>
+        <div class="hidden md:flex items-center gap-6 font-mono text-sm">
+          <a
+            href="/glossary"
+            class="text-terminal-white hover:text-terminal-dim transition-colors"
+          >
+            Glossary
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <nav class="font-mono text-xs text-terminal-gray mb-6">
+      <a href="/" class="hover:text-terminal-green transition-colors">home</a>
+      <span class="mx-2">/</span>
+      <a href="/glossary" class="hover:text-terminal-green transition-colors">glossary</a>
+      <span class="mx-2">/</span>
+      <span class="text-terminal-dim">{entry.data.term}</span>
+    </nav>
+
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      <main class="lg:col-span-3">
+        <header class="mb-8">
+          <h1 class="font-mono text-3xl sm:text-4xl font-bold text-terminal-white tracking-tight mb-4">
+            {entry.data.term}
+          </h1>
+          <p class="text-terminal-gray text-lg leading-relaxed mb-4">{entry.data.definition}</p>
+          <TagList tags={entry.data.tags} />
+        </header>
+
+        <div class="guide-content bg-terminal-dark p-6 sm:p-8">
+          <Content />
+        </div>
+      </main>
+
+      <aside class="lg:col-span-1">
+        <div class="sticky top-8 space-y-6">
+          <a
+            href="/glossary"
+            class="block bg-terminal-dark border border-terminal-dim p-4 font-mono text-sm text-terminal-white hover:text-terminal-green transition-colors"
+          >
+            ← Volver al glosario
+          </a>
+
+          <RelatedGuides guides={resolvedRelatedGuides} />
+        </div>
+      </aside>
+    </div>
+  </div>
+</BaseLayout>

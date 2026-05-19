@@ -1,6 +1,6 @@
 # Spec 005: Glossary
 
-**State:** draft
+**State:** done
 
 ## Context
 
@@ -45,14 +45,14 @@ Página de listado de glosario (`/glossary`) con navegación alfabética, búsqu
 
 ## Done
 
-- [ ] `/glossary` muestra todos los términos ordenados alfabéticamente
-- [ ] Términos agrupados por letra inicial con anclas navegables
-- [ ] Cada término en el listado muestra definición corta y guías relacionadas
-- [ ] `/glossary/:slug` renderiza contenido Markdown del término
-- [ ] Página individual muestra guías relacionadas como links
-- [ ] `pnpm build` genera todas las rutas del glosario
-- [ ] Links desde guías a términos del glosario funcionan
-- [ ] Navegación A-Z funciona como anclas internas
+- [x] `/glossary` muestra todos los términos ordenados alfabéticamente
+- [x] Términos agrupados por letra inicial con anclas navegables
+- [x] Cada término en el listado muestra definición corta y guías relacionadas
+- [x] `/glossary/:slug` renderiza contenido Markdown del término
+- [x] Página individual muestra guías relacionadas como links
+- [x] `pnpm build` genera todas las rutas del glosario
+- [x] Links desde guías a términos del glosario funcionan (contenido manual en Markdown)
+- [x] Navegación A-Z funciona como anclas internas
 
 ## Technical Notes
 

@@ -1,0 +1,34 @@
+---
+import { cn } from '../lib/utils';
+
+interface Props {
+  availableLetters: string[];
+  class?: string;
+}
+
+const { availableLetters, class: className } = Astro.props;
+const allLetters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+---
+
+<nav class={cn('sticky top-8', className)}>
+  <h3 class="font-mono text-sm uppercase tracking-widest text-terminal-gray mb-3">A–Z</h3>
+  <div class="flex flex-wrap gap-1.5">
+    {allLetters.map((letter) => {
+      const isAvailable = availableLetters.includes(letter);
+      return (
+        <a
+          href={isAvailable ? `#${letter.toLowerCase()}` : undefined}
+          class={cn(
+            'inline-flex items-center justify-center w-7 h-7 font-mono text-xs no-underline transition-colors',
+            isAvailable
+              ? 'text-terminal-white hover:text-terminal-green hover:bg-terminal-dark'
+              : 'text-terminal-dim cursor-default',
+          )}
+          aria-disabled={!isAvailable}
+        >
+          {letter}
+        </a>
+      );
+    })}
+  </div>
+</nav>

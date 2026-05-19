@@ -1,0 +1,91 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import GlossaryNav from '@/components/GlossaryNav.astro';
+import GlossaryEntry from '@/components/GlossaryEntry.astro';
+import { getCollection, getEntry } from 'astro:content';
+
+const entries = await getCollection('glossary');
+
+entries.sort((a, b) => a.data.term.localeCompare(b.data.term));
+
+const entriesWithGuides = await Promise.all(
+  entries.map(async (entry) => {
+    const relatedGuides = await Promise.all(
+      (entry.data.relatedGuides || []).map(async (id: string) => {
+        const guide = await getEntry('guides', id);
+        return guide ? { title: guide.data.title, id: guide.id } : null;
+      }),
+    );
+    return {
+      ...entry,
+      resolvedGuides: relatedGuides.filter(Boolean) as { title: string; id: string }[],
+    };
+  }),
+);
+
+const groups = new Map<string, typeof entriesWithGuides>();
+for (const entry of entriesWithGuides) {
+  const firstLetter = entry.data.term.charAt(0).toUpperCase();
+  if (!groups.has(firstLetter)) {
+    groups.set(firstLetter, []);
+  }
+  groups.get(firstLetter)!.push(entry);
+}
+
+const availableLetters = Array.from(groups.keys()).sort();
+---
+
+<BaseLayout title="Glossary — devBelts" description="Glosario de términos técnicos de programación">
+  <nav class="border-b border-terminal-dim bg-terminal-darker">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <a href="/" class="font-mono font-bold text-lg tracking-tight">
+          <span class="text-terminal-green">$</span> devBelts
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <nav class="font-mono text-xs text-terminal-gray mb-6">
+      <a href="/" class="hover:text-terminal-green transition-colors">home</a>
+      <span class="mx-2">/</span>
+      <span class="text-terminal-dim">glossary</span>
+    </nav>
+
+    <header class="mb-8">
+      <h1 class="font-mono text-3xl sm:text-4xl font-bold text-terminal-white tracking-tight mb-4">Glossary</h1>
+      <p class="text-terminal-gray text-lg">Glosario de términos técnicos de programación</p>
+    </header>
+
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      <aside class="lg:col-span-1">
+        <GlossaryNav availableLetters={availableLetters} />
+      </aside>
+
+      <main class="lg:col-span-3 space-y-12">
+        {availableLetters.map((letter) => {
+          const items = groups.get(letter)!;
+          return (
+            <section id={letter.toLowerCase()}>
+              <h2 class="font-mono text-2xl font-bold text-terminal-white mb-6 tracking-tight border-b border-terminal-dim pb-2">
+                {letter}
+              </h2>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {items.map((entry) => (
+                  <GlossaryEntry
+                    term={entry.data.term}
+                    definition={entry.data.definition}
+                    tags={entry.data.tags}
+                    relatedGuides={entry.resolvedGuides}
+                    slug={entry.id}
+                  />
+                ))}
+              </div>
+            </section>
+          );
+        })}
+      </main>
+    </div>
+  </div>
+</BaseLayout>
