@@ -4,7 +4,10 @@ import type { APIRoute } from 'astro';
 const site = 'https://dev-belts.dobleb.cl';
 
 export const GET: APIRoute = async () => {
-  const guides = await getCollection('guides');
+  const [guides, glossaryEntries] = await Promise.all([
+    getCollection('guides'),
+    getCollection('glossary'),
+  ]);
 
   const staticRoutes = [
     { loc: '/', priority: '1.0' },
@@ -23,17 +26,31 @@ export const GET: APIRoute = async () => {
     .map((guide) => ({
       loc: `/guides/${guide.id}`,
       priority: '0.7',
-      lastmod: guide.data.updated,
     }));
 
-  const allRoutes = [...staticRoutes, ...beltRoutes, ...guideRoutes];
+  const glossaryRoutes = glossaryEntries.map((entry) => ({
+    loc: `/glossary/${entry.id}`,
+    priority: '0.6',
+  }));
+
+  const allTags = new Set<string>();
+  for (const guide of guides) {
+    for (const tag of guide.data.tags) {
+      allTags.add(tag);
+    }
+  }
+  const tagRoutes = [...allTags].map((tag) => ({
+    loc: `/tag/${tag}`,
+    priority: '0.5',
+  }));
+
+  const allRoutes = [...staticRoutes, ...beltRoutes, ...guideRoutes, ...glossaryRoutes, ...tagRoutes];
 
   const urlset = allRoutes
     .map(
       (route) => `  <url>
     <loc>${site}${route.loc}</loc>
     <priority>${route.priority}</priority>
-    ${route.lastmod ? `<lastmod>${route.lastmod}</lastmod>` : ''}
   </url>`,
     )
     .join('\n');
