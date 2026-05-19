@@ -34,7 +34,7 @@
       return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
     }
 
-    function setTheme(theme) {
+    function setTheme(theme: string) {
       if (theme === 'light') {
         document.documentElement.classList.remove('dark');
         sunIcon?.classList.remove('hidden');
