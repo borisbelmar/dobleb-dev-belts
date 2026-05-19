@@ -1,0 +1,83 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import GuideCard from '@/components/GuideCard.astro';
+import { getCollection } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+
+export const getStaticPaths = (async () => {
+  const guides = await getCollection('guides');
+  const published = guides.filter((g) => g.data.published !== false);
+  const allTags = [...new Set(published.flatMap((g) => g.data.tags))];
+
+  return allTags.map((tag) => ({
+    params: { name: tag },
+  }));
+}) satisfies GetStaticPaths;
+
+const { name } = Astro.params;
+const allGuides = await getCollection('guides');
+const published = allGuides.filter((g) => g.data.published !== false);
+const tagGuides = published.filter((g) => g.data.tags.includes(name!));
+
+const beltOrder = ['white-belt', 'yellow-belt', 'green-belt', 'black-belt'];
+const beltLabels: Record<string, string> = {
+  'white-belt': 'White Belt',
+  'yellow-belt': 'Yellow Belt',
+  'green-belt': 'Green Belt',
+  'black-belt': 'Black Belt',
+};
+
+const grouped = beltOrder
+  .map((belt) => ({
+    belt,
+    label: beltLabels[belt],
+    guides: tagGuides
+      .filter((g) => g.data.belt === belt)
+      .sort((a, b) => a.data.order - b.data.order),
+  }))
+  .filter((section) => section.guides.length > 0);
+---
+
+<BaseLayout title={`#${name} — devBelts`} description={`Guías etiquetadas con "${name}"`}>
+  <nav class="border-b border-terminal-dim bg-terminal-darker">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <a href="/" class="font-mono font-bold text-lg tracking-tight">
+          <span class="text-terminal-green">$</span> devBelts
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <nav class="font-mono text-xs text-terminal-gray mb-6">
+      <a href="/" class="hover:text-terminal-green transition-colors">home</a>
+      <span class="mx-2">/</span>
+      <span class="text-terminal-dim">tag</span>
+      <span class="mx-2">/</span>
+      <span class="text-terminal-dim">{name}</span>
+    </nav>
+    <h1 class="font-mono text-3xl sm:text-4xl font-bold text-terminal-white tracking-tight">
+      <span class="text-terminal-dim">#</span>{name}
+    </h1>
+    <p class="text-terminal-gray text-lg mt-2">{tagGuides.length} {tagGuides.length === 1 ? 'guía' : 'guías'} etiquetadas</p>
+  </header>
+
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 space-y-12">
+    {grouped.map((section) => (
+      <div>
+        <h2 class="font-mono text-xl font-semibold text-terminal-white mb-6 tracking-tight">{section.label}</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {section.guides.map((guide) => (
+            <GuideCard
+              title={guide.data.title}
+              description={guide.data.description}
+              tags={guide.data.tags}
+              href={`/guides/${guide.id}`}
+            />
+          ))}
+        </div>
+      </div>
+    ))}
+  </section>
+</BaseLayout>

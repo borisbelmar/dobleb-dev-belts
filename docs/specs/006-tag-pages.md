@@ -1,6 +1,6 @@
 # Spec 006: Tag Pages
 
-**State:** draft
+**State:** done
 
 ## Context
 
@@ -39,13 +39,13 @@ Páginas de tag (`/tag/:name`) que listan todas las guías publicadas con ese ta
 
 ## Done
 
-- [ ] `/tag/javascript` muestra todas las guías con tag "javascript"
-- [ ] Guías agrupadas por belt en la página de tag
-- [ ] Cada guía usa `GuideCard` consistente con el resto del sitio
-- [ ] `pnpm build` genera todas las rutas de tags
-- [ ] Links desde guías a páginas de tag funcionan
-- [ ] Breadcrumb navega correctamente
-- [ ] Tags del glosario también linkean a páginas de tag
+- [x] `/tag/javascript` muestra todas las guías con tag "javascript"
+- [x] Guías agrupadas por belt en la página de tag
+- [x] Cada guía usa `GuideCard` consistente con el resto del sitio
+- [x] `pnpm build` genera todas las rutas de tags
+- [x] Links desde guías a páginas de tag funcionan
+- [x] Breadcrumb navega correctamente
+- [x] Tags del glosario también linkean a páginas de tag
 
 ## Technical Notes
 
