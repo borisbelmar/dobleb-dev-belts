@@ -1,0 +1,83 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import GuideCard from '../components/GuideCard.astro';
+import { getCollection } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+
+export const getStaticPaths = (async () => {
+  const guides = await getCollection('guides');
+
+  const beltData = {
+    'white-belt': { label: 'White Belt', description: 'Fundamentos esenciales de programación', name: 'Level 01' },
+    'yellow-belt': { label: 'Yellow Belt', description: 'La Web y las APIs', name: 'Level 02' },
+    'green-belt': { label: 'Green Belt', description: 'Aplicaciones Fullstack', name: 'Level 03' },
+    'black-belt': { label: 'Black Belt', description: 'Arquitectura y Operaciones', name: 'Level 04' },
+  };
+
+  return Object.keys(beltData).map((slug) => {
+    const beltGuides = guides
+      .filter((g) => g.data.belt === slug && g.data.published !== false)
+      .sort((a, b) => a.data.order - b.data.order);
+
+    return {
+      params: { belt: slug },
+      props: {
+        belt: slug,
+        label: beltData[slug as keyof typeof beltData].label,
+        description: beltData[slug as keyof typeof beltData].description,
+        name: beltData[slug as keyof typeof beltData].name,
+        guides: beltGuides,
+        allBelts: beltData,
+      },
+    };
+  });
+}) satisfies GetStaticPaths;
+
+const { belt, label, description, name, guides, allBelts } = Astro.props;
+
+const otherBelts = Object.entries(allBelts)
+  .filter(([slug]) => slug !== belt)
+  .map(([slug, data]) => ({
+    slug,
+    ...data,
+  }));
+---
+
+<BaseLayout title={`${label} — devBelts`} description={description}>
+  <nav class="border-b border-terminal-dim bg-terminal-darker">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <a href="/" class="font-mono font-bold text-lg tracking-tight">
+          <span class="text-terminal-green">$</span> devBelts
+        </a>
+        <div class="hidden md:flex items-center gap-6 font-mono text-sm">
+          {otherBelts.map((b) => (
+            <a href={`/${b.slug}`} class="text-terminal-white hover:text-terminal-dim transition-colors">
+              {b.label}
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <header class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="font-mono text-terminal-dim text-sm tracking-widest uppercase mb-2">{name}</div>
+    <h1 class="font-mono text-3xl sm:text-4xl font-bold text-terminal-white tracking-tight mb-3">{label}</h1>
+    <p class="text-terminal-gray text-lg">{description}</p>
+    <div class="mt-2 font-mono text-xs text-terminal-dim">{guides.length} {guides.length === 1 ? 'guide' : 'guides'}</div>
+  </header>
+
+  <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {guides.map((guide) => (
+        <GuideCard
+          title={guide.data.title}
+          description={guide.data.description}
+          tags={guide.data.tags}
+          href={`/guides/${guide.data.belt}/${guide.id}`}
+        />
+      ))}
+    </div>
+  </section>
+</BaseLayout>

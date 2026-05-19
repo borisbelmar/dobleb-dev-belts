@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>devBelts — Design Reference</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        terminal: {
+                            black: 'var(--bg-primary)',
+                            dark: 'var(--bg-secondary)',
+                            darker: 'var(--bg-tertiary)',
+                            green: 'var(--accent-primary)',
+                            dim: 'var(--accent-secondary)',
+                            white: 'var(--text-primary)',
+                            gray: 'var(--text-secondary)',
+                            error: 'var(--color-error)',
+                            warning: 'var(--color-warning)',
+                            info: 'var(--color-info)',
+                        },
+                        paper: {
+                            white: '#FAFAFA',
+                            gray: '#F0F0F0',
+                            green: '#00802B',
+                            moss: '#006622',
+                            ink: '#1A1A1A',
+                            slate: '#555555',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Source Sans 3"', 'system-ui', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* CSS Variables - Dark Mode (default) */
+        :root,
+        .dark {
+            --bg-primary: #0A0A0A;
+            --bg-secondary: #1A1A1A;
+            --bg-tertiary: #111111;
+            --accent-primary: #00FF41;
+            --accent-secondary: #00CC33;
+            --text-primary: #E0E0E0;
+            --text-secondary: #888888;
+            --color-error: #FF3333;
+            --color-warning: #FFB800;
+            --color-info: #00FFFF;
+            --border-color: #00CC33;
+            --code-bg: #111111;
+            --glitch-before-shadow: #ff00c1;
+            --glitch-after-shadow: #00fff9;
+            --cursor-color: #00FF41;
+            --scrollbar-track: #0A0A0A;
+            --scrollbar-thumb: #00CC33;
+            --scrollbar-thumb-hover: #00FF41;
+            --card-hover-shadow: rgba(0, 255, 65, 0.15);
+            --glow-color: rgba(0, 255, 65, 0.3);
+            --glow-hover: rgba(0, 255, 65, 0.5);
+            --btn-text: #0A0A0A;
+            --btn-hover: #00CC33;
+            --link-hover: #00CC33;
+            --prose-code-bg: #111111;
+            --badge-bg: rgba(0, 255, 65, 0.1);
+        }
+
+        /* CSS Variables - Light Mode */
+        html:not(.dark) {
+            --bg-primary: #FAFAFA;
+            --bg-secondary: #F0F0F0;
+            --bg-tertiary: #E8E8E8;
+            --accent-primary: #00802B;
+            --accent-secondary: #006622;
+            --text-primary: #1A1A1A;
+            --text-secondary: #555555;
+            --color-error: #CC0000;
+            --color-warning: #CC9900;
+            --color-info: #0066CC;
+            --border-color: #006622;
+            --code-bg: #E8E8E8;
+            --glitch-before-shadow: #cc0066;
+            --glitch-after-shadow: #0066cc;
+            --cursor-color: #00802B;
+            --scrollbar-track: #FAFAFA;
+            --scrollbar-thumb: #006622;
+            --scrollbar-thumb-hover: #00802B;
+            --card-hover-shadow: rgba(0, 128, 43, 0.15);
+            --glow-color: rgba(0, 128, 43, 0.3);
+            --glow-hover: rgba(0, 128, 43, 0.5);
+            --btn-text: #FAFAFA;
+            --btn-hover: #006622;
+            --link-hover: #006622;
+            --prose-code-bg: #E8E8E8;
+            --badge-bg: rgba(0, 128, 43, 0.1);
+        }
+
+        /* Glitch Effect */
+        .glitch {
+            position: relative;
+            display: inline-block;
+        }
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        .glitch::before {
+            left: 2px;
+            text-shadow: -2px 0 var(--glitch-before-shadow);
+            clip: rect(24px, 550px, 90px, 0);
+            animation: glitch-anim 3s infinite linear alternate-reverse;
+        }
+        .glitch::after {
+            left: -2px;
+            text-shadow: 2px 0 var(--glitch-after-shadow);
+            clip: rect(85px, 550px, 140px, 0);
+            animation: glitch-anim2 2.5s infinite linear alternate-reverse;
+        }
+        @keyframes glitch-anim {
+            0% { clip: rect(42px, 9999px, 44px, 0); }
+            5% { clip: rect(12px, 9999px, 59px, 0); }
+            10% { clip: rect(48px, 9999px, 29px, 0); }
+            15% { clip: rect(42px, 9999px, 73px, 0); }
+            20% { clip: rect(63px, 9999px, 27px, 0); }
+            25% { clip: rect(34px, 9999px, 55px, 0); }
+            30% { clip: rect(85px, 9999px, 54px, 0); }
+            35% { clip: rect(20px, 9999px, 27px, 0); }
+            40% { clip: rect(63px, 9999px, 47px, 0); }
+            45% { clip: rect(25px, 9999px, 75px, 0); }
+            50% { clip: rect(60px, 9999px, 29px, 0); }
+            55% { clip: rect(15px, 9999px, 77px, 0); }
+            60% { clip: rect(55px, 9999px, 44px, 0); }
+            65% { clip: rect(82px, 9999px, 30px, 0); }
+            70% { clip: rect(34px, 9999px, 61px, 0); }
+            75% { clip: rect(66px, 9999px, 19px, 0); }
+            80% { clip: rect(75px, 9999px, 59px, 0); }
+            85% { clip: rect(40px, 9999px, 25px, 0); }
+            90% { clip: rect(62px, 9999px, 48px, 0); }
+            95% { clip: rect(10px, 9999px, 85px, 0); }
+            100% { clip: rect(54px, 9999px, 24px, 0); }
+        }
+        @keyframes glitch-anim2 {
+            0% { clip: rect(65px, 9999px, 99px, 0); }
+            5% { clip: rect(52px, 9999px, 20px, 0); }
+            10% { clip: rect(79px, 9999px, 15px, 0); }
+            15% { clip: rect(75px, 9999px, 89px, 0); }
+            20% { clip: rect(28px, 9999px, 39px, 0); }
+            25% { clip: rect(100px, 9999px, 51px, 0); }
+            30% { clip: rect(39px, 9999px, 99px, 0); }
+            35% { clip: rect(49px, 9999px, 59px, 0); }
+            40% { clip: rect(99px, 9999px, 39px, 0); }
+            45% { clip: rect(79px, 9999px, 20px, 0); }
+            50% { clip: rect(69px, 9999px, 12px, 0); }
+            55% { clip: rect(79px, 9999px, 39px, 0); }
+            60% { clip: rect(20px, 9999px, 79px, 0); }
+            65% { clip: rect(49px, 9999px, 99px, 0); }
+            70% { clip: rect(19px, 9999px, 59px, 0); }
+            75% { clip: rect(79px, 9999px, 39px, 0); }
+            80% { clip: rect(49px, 9999px, 29px, 0); }
+            85% { clip: rect(20px, 9999px, 59px, 0); }
+            90% { clip: rect(79px, 9999px, 99px, 0); }
+            95% { clip: rect(10px, 9999px, 39px, 0); }
+            100% { clip: rect(39px, 9999px, 79px, 0); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .glitch::before,
+            .glitch::after {
+                animation: none;
+            }
+        }
+
+        /* Scanlines */
+        .scanlines::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                rgba(255, 255, 255, 0),
+                rgba(255, 255, 255, 0) 50%,
+                rgba(0, 0, 0, 0.03) 50%,
+                rgba(0, 0, 0, 0.03)
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 50;
+        }
+
+        /* Cursor Blink */
+        .cursor-blink::after {
+            content: '█';
+            animation: blink 1s step-end infinite;
+            color: var(--cursor-color);
+            margin-left: 2px;
+        }
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* Terminal Glow */
+        .terminal-glow {
+            box-shadow: 0 0 8px var(--glow-color);
+        }
+        .terminal-glow:hover {
+            box-shadow: 0 0 16px var(--glow-hover);
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--scrollbar-track);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--scrollbar-thumb);
+            border-radius: 0;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--scrollbar-thumb-hover);
+        }
+
+        /* Smooth transitions */
+        * {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-terminal-black text-terminal-white font-sans scanlines min-h-screen">
+    <!-- Reference Note -->
+    <div class="fixed top-4 right-4 z-50 font-mono text-xs text-terminal-gray bg-terminal-dark border border-terminal-dim px-3 py-2">
+        <span class="text-terminal-dim">></span> DESIGN.md reference
+        <button id="themeToggle" class="ml-3 text-terminal-green hover:text-terminal-dim transition-colors" aria-label="Toggle theme">
+            [◐]
+        </button>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="border-b border-terminal-dim bg-terminal-darker">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-6">
+                    <a href="#" class="font-mono font-bold text-lg tracking-tight">
+                        <span class="text-terminal-green">$</span> devBelts
+                    </a>
+                    <div class="hidden md:flex items-center gap-6 font-mono text-sm">
+                        <a href="#" class="text-terminal-green border-b-2 border-terminal-green pb-1">home</a>
+                        <a href="#" class="text-terminal-white hover:text-terminal-dim transition-colors">guides</a>
+                        <a href="#" class="text-terminal-white hover:text-terminal-dim transition-colors">belts</a>
+                        <a href="#" class="text-terminal-white hover:text-terminal-dim transition-colors">about</a>
+                    </div>
+                </div>
+                <div class="font-mono text-xs text-terminal-gray">
+                    <span class="text-terminal-dim">></span> v0.1.0-alpha
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+        <div class="space-y-6">
+            <div class="font-mono text-terminal-dim text-sm tracking-widest uppercase">
+                <span class="text-terminal-green">></span> initializing learning sequence...
+            </div>
+            <h1 class="glitch font-mono text-4xl sm:text-5xl lg:text-6xl font-bold text-terminal-white tracking-tight" data-text="devBelts">
+                devBelts
+            </h1>
+            <p class="text-xl sm:text-2xl text-terminal-gray max-w-2xl leading-relaxed">
+                Guías de programación organizadas en 4 niveles tipo cinturones.
+                <span class="text-terminal-green">Aprende. Practica. Domina.</span>
+            </p>
+            <div class="flex flex-wrap gap-4 pt-4">
+                <button class="font-mono text-sm bg-terminal-green font-bold px-6 py-3 hover:bg-terminal-dim transition-all terminal-glow" style="color: var(--btn-text)">
+                    start_learning()
+                </button>
+                <button class="font-mono text-sm border border-terminal-green text-terminal-green px-6 py-3 hover:bg-terminal-green/10 transition-all">
+                    view_roadmap()
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Belt Levels -->
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h2 class="glitch font-mono text-2xl sm:text-3xl font-semibold text-terminal-white mb-8 tracking-tight" data-text="Belt Levels">
+            Belt Levels
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <!-- White Belt -->
+            <div class="bg-terminal-dark border border-terminal-dim p-6 hover:border-terminal-green transition-all hover:-translate-y-0.5" style="--hover-shadow: var(--card-hover-shadow)">
+                <div class="font-mono text-xs uppercase tracking-widest text-terminal-gray mb-2">Level 01</div>
+                <div class="flex items-center gap-2 mb-3">
+                    <div class="w-4 h-4 bg-white border border-gray-600"></div>
+                    <h3 class="font-sans font-semibold text-lg text-terminal-white">White Belt</h3>
+                </div>
+                <p class="text-terminal-gray text-sm leading-relaxed">Fundamentos esenciales de programación</p>
+                <div class="mt-4 font-mono text-xs text-terminal-dim">10 guides</div>
+            </div>
+            <!-- Yellow Belt -->
+            <div class="bg-terminal-dark border border-yellow-600/40 p-6 hover:border-yellow-500 transition-all hover:-translate-y-0.5">
+                <div class="font-mono text-xs uppercase tracking-widest text-terminal-gray mb-2">Level 02</div>
+                <div class="flex items-center gap-2 mb-3">
+                    <div class="w-4 h-4 bg-yellow-500"></div>
+                    <h3 class="font-sans font-semibold text-lg text-terminal-white">Yellow Belt</h3>
+                </div>
+                <p class="text-terminal-gray text-sm leading-relaxed">La Web y las APIs</p>
+                <div class="mt-4 font-mono text-xs text-terminal-dim">16 guides</div>
+            </div>
+            <!-- Green Belt -->
+            <div class="bg-terminal-dark border border-green-600/40 p-6 hover:border-green-500 transition-all hover:-translate-y-0.5">
+                <div class="font-mono text-xs uppercase tracking-widest text-terminal-gray mb-2">Level 03</div>
+                <div class="flex items-center gap-2 mb-3">
+                    <div class="w-4 h-4 bg-green-500"></div>
+                    <h3 class="font-sans font-semibold text-lg text-terminal-white">Green Belt</h3>
+                </div>
+                <p class="text-terminal-gray text-sm leading-relaxed">Aplicaciones Fullstack</p>
+                <div class="mt-4 font-mono text-xs text-terminal-dim">18 guides</div>
+            </div>
+            <!-- Black Belt -->
+            <div class="bg-terminal-dark border border-gray-600 p-6 hover:border-gray-400 transition-all hover:-translate-y-0.5">
+                <div class="font-mono text-xs uppercase tracking-widest text-terminal-gray mb-2">Level 04</div>
+                <div class="flex items-center gap-2 mb-3">
+                    <div class="w-4 h-4 bg-gray-900 border border-gray-600"></div>
+                    <h3 class="font-sans font-semibold text-lg text-terminal-white">Black Belt</h3>
+                </div>
+                <p class="text-terminal-gray text-sm leading-relaxed">Arquitectura y Operaciones</p>
+                <div class="mt-4 font-mono text-xs text-terminal-dim">14 guides</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Guide Card Example -->
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h2 class="glitch font-mono text-2xl sm:text-3xl font-semibold text-terminal-white mb-8 tracking-tight" data-text="Featured Guide">
+            Featured Guide
+        </h2>
+        <div class="bg-terminal-dark border border-terminal-dim max-w-3xl">
+            <div class="border-b border-terminal-dim px-4 py-2 flex items-center gap-2 font-mono text-xs">
+                <div class="flex gap-1.5">
+                    <div class="w-2.5 h-2.5 rounded-full bg-terminal-error/60"></div>
+                    <div class="w-2.5 h-2.5 rounded-full bg-terminal-warning/60"></div>
+                    <div class="w-2.5 h-2.5 rounded-full bg-terminal-green/60"></div>
+                </div>
+                <span class="text-terminal-gray">variables-and-types.md</span>
+            </div>
+            <div class="p-6">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="font-mono text-xs uppercase tracking-widest text-terminal-green px-2 py-1 border border-terminal-green" style="background: var(--badge-bg)">
+                        white-belt
+                    </div>
+                    <div class="font-mono text-xs text-terminal-gray">5 min read</div>
+                </div>
+                <h3 class="font-sans font-semibold text-xl text-terminal-white mb-3">Variables y Tipos de Datos</h3>
+                <p class="text-terminal-gray leading-relaxed mb-4">
+                    Aprende los fundamentos de las variables, tipos de datos y cómo JavaScript maneja la información en memoria.
+                </p>
+                <div class="flex items-center gap-4 font-mono text-xs text-terminal-gray">
+                    <span><span class="text-terminal-dim">></span> last_updated: 2024-01-15</span>
+                    <span><span class="text-terminal-dim">></span> status: <span class="text-terminal-green">published</span></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Code Block Example -->
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h2 class="glitch font-mono text-2xl sm:text-3xl font-semibold text-terminal-white mb-8 tracking-tight" data-text="Code Example">
+            Code Example
+        </h2>
+        <div class="border border-terminal-dim max-w-3xl" style="background: var(--code-bg)">
+            <div class="border-b border-terminal-dim px-4 py-2 flex items-center justify-between">
+                <div class="flex items-center gap-2 font-mono text-xs">
+                    <div class="flex gap-1.5">
+                        <div class="w-2.5 h-2.5 rounded-full bg-terminal-error/60"></div>
+                        <div class="w-2.5 h-2.5 rounded-full bg-terminal-warning/60"></div>
+                        <div class="w-2.5 h-2.5 rounded-full bg-terminal-green/60"></div>
+                    </div>
+                    <span class="text-terminal-gray">example.js</span>
+                </div>
+                <button class="font-mono text-xs text-terminal-dim hover:text-terminal-green transition-colors">copy</button>
+            </div>
+            <pre class="p-4 font-mono text-sm leading-relaxed overflow-x-auto"><code><span class="text-terminal-dim">// Variable declaration</span>
+<span class="text-terminal-info">const</span> <span class="text-terminal-white">name</span> = <span class="text-terminal-warning">"devBelts"</span>;
+<span class="text-terminal-info">let</span> <span class="text-terminal-white">level</span> = <span class="text-terminal-warning">"white"</span>;
+<span class="text-terminal-info">var</span> <span class="text-terminal-white">guides</span> = <span class="text-terminal-green">58</span>;
+
+<span class="text-terminal-dim">// Function example</span>
+<span class="text-terminal-info">function</span> <span class="text-terminal-info">getBeltColor</span>(<span class="text-terminal-white">belt</span>) {
+    <span class="text-terminal-info">const</span> <span class="text-terminal-white">colors</span> = {
+        <span class="text-terminal-warning">white</span>: <span class="text-terminal-warning">"#FFFFFF"</span>,
+        <span class="text-terminal-warning">yellow</span>: <span class="text-terminal-warning">"#EAB308"</span>,
+        <span class="text-terminal-warning">green</span>: <span class="text-terminal-warning">"#22C55E"</span>,
+        <span class="text-terminal-warning">black</span>: <span class="text-terminal-warning">"#111827"</span>
+    };
+    <span class="text-terminal-info">return</span> <span class="text-terminal-white">colors</span>[<span class="text-terminal-white">belt</span>] || <span class="text-terminal-warning">"unknown"</span>;
+}</code></pre>
+        </div>
+    </section>
+
+    <!-- Markdown Content Example -->
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h2 class="glitch font-mono text-2xl sm:text-3xl font-semibold text-terminal-white mb-8 tracking-tight" data-text="Markdown Rendering">
+            Markdown Rendering
+        </h2>
+        <div class="bg-terminal-dark max-w-3xl p-8">
+            <article class="max-w-none">
+                <h3 class="font-sans font-semibold text-2xl text-terminal-white mb-4">Introducción a las Variables</h3>
+                <p class="text-terminal-white leading-relaxed mb-4">
+                    Las variables son contenedores que almacenan valores. En JavaScript moderno, usamos <code class="font-mono text-sm px-1.5 py-0.5 text-terminal-green" style="background: var(--prose-code-bg)">let</code> y <code class="font-mono text-sm px-1.5 py-0.5 text-terminal-green" style="background: var(--prose-code-bg)">const</code> para declararlas.
+                </p>
+                <blockquote class="border-l-2 border-terminal-green pl-4 italic text-terminal-gray my-6">
+                    "Una variable bien nombrada vale más que mil comentarios."
+                </blockquote>
+                <h4 class="font-sans font-medium text-lg text-terminal-white mt-6 mb-3">Reglas de nombrado</h4>
+                <ul class="space-y-2 text-terminal-gray mb-6">
+                    <li class="flex items-start gap-2">
+                        <span class="text-terminal-green mt-1">></span>
+                        <span>Deben comenzar con letra, <code class="font-mono text-sm px-1 text-terminal-green" style="background: var(--prose-code-bg)">_</code> o <code class="font-mono text-sm px-1 text-terminal-green" style="background: var(--prose-code-bg)">$</code></span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="text-terminal-green mt-1">></span>
+                        <span>Son case-sensitive (<code class="font-mono text-sm px-1 text-terminal-green" style="background: var(--prose-code-bg)">name</code> ≠ <code class="font-mono text-sm px-1 text-terminal-green" style="background: var(--prose-code-bg)">Name</code>)</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="text-terminal-green mt-1">></span>
+                        <span>No pueden ser palabras reservadas</span>
+                    </li>
+                </ul>
+                <p class="text-terminal-white leading-relaxed">
+                    Para más detalles, consulta la <a href="#" class="text-terminal-green underline hover:transition-colors" style="color: var(--link-hover)">documentación oficial de MDN</a>.
+                </p>
+            </article>
+        </div>
+    </section>
+
+    <!-- Terminal Prompt Section -->
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="border border-terminal-dim max-w-3xl p-6 font-mono text-sm" style="background: var(--code-bg)">
+            <div class="flex items-center gap-2 text-terminal-gray mb-4">
+                <span class="text-terminal-green">dev</span>:<span class="text-terminal-info">~/guides</span><span class="text-terminal-dim">$</span>
+                <span class="cursor-blink">ls -la</span>
+            </div>
+            <div class="space-y-1 text-terminal-gray">
+                <div class="flex gap-4">
+                    <span class="text-terminal-dim">drwxr-xr-x</span>
+                    <span class="text-terminal-green">10</span>
+                    <span class="text-terminal-info">white-belt</span>
+                </div>
+                <div class="flex gap-4">
+                    <span class="text-terminal-dim">drwxr-xr-x</span>
+                    <span class="text-terminal-green">16</span>
+                    <span class="text-terminal-warning">yellow-belt</span>
+                </div>
+                <div class="flex gap-4">
+                    <span class="text-terminal-dim">drwxr-xr-x</span>
+                    <span class="text-terminal-green">18</span>
+                    <span>green-belt</span>
+                </div>
+                <div class="flex gap-4">
+                    <span class="text-terminal-dim">drwxr-xr-x</span>
+                    <span class="text-terminal-green">14</span>
+                    <span class="text-terminal-gray">black-belt</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Progress Indicator -->
+    <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h2 class="glitch font-mono text-2xl sm:text-3xl font-semibold text-terminal-white mb-8 tracking-tight" data-text="Your Progress">
+            Your Progress
+        </h2>
+        <div class="bg-terminal-dark border border-terminal-dim max-w-3xl p-6">
+            <div class="flex items-center justify-between mb-2">
+                <span class="font-mono text-sm text-terminal-white">White Belt</span>
+                <span class="font-mono text-xs text-terminal-green">7/10 completed</span>
+            </div>
+            <div class="w-full bg-terminal-darker h-3 border border-terminal-dim">
+                <div class="bg-terminal-green h-full" style="width: 70%"></div>
+            </div>
+
+            <div class="flex items-center justify-between mb-2 mt-6">
+                <span class="font-mono text-sm text-terminal-white">Yellow Belt</span>
+                <span class="font-mono text-xs text-terminal-warning">3/16 completed</span>
+            </div>
+            <div class="w-full bg-terminal-darker h-3 border border-terminal-dim">
+                <div class="bg-terminal-warning h-full" style="width: 18.75%"></div>
+            </div>
+
+            <div class="flex items-center justify-between mb-2 mt-6">
+                <span class="font-mono text-sm text-terminal-gray">Green Belt</span>
+                <span class="font-mono text-xs text-terminal-gray">0/18 completed</span>
+            </div>
+            <div class="w-full bg-terminal-darker h-3 border border-terminal-dim">
+                <div class="bg-gray-600 h-full" style="width: 0%"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-terminal-dim mt-16">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 font-mono text-xs text-terminal-gray">
+                <div>
+                    <span class="text-terminal-dim">></span> devBelts © 2026 dobleb.cl
+                </div>
+                <div class="flex items-center gap-4">
+                    <a href="#" class="hover:text-terminal-green transition-colors">github</a>
+                    <a href="#" class="hover:text-terminal-green transition-colors">twitter</a>
+                    <a href="#" class="hover:text-terminal-green transition-colors">contact</a>
+                </div>
+                <div>
+                    <span class="text-terminal-dim">></span> built with astro + tailwind
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            html.classList.remove('dark');
+        } else if (!savedTheme && window.matchMedia('(prefers-color-scheme: light)').matches) {
+            html.classList.remove('dark');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+---
+import { cva, type VariantProps } from 'class-variance-authority';
+import { cn } from '../lib/utils';
+
+const beltCardVariants = cva(
+  'block bg-terminal-dark border p-6 transition-all hover:-translate-y-0.5',
+  {
+    variants: {
+      belt: {
+        'white-belt': 'border-gray-300 hover:border-gray-200 hover:shadow-[0_0_12px_rgba(209,213,219,0.15)]',
+        'yellow-belt': 'border-yellow-500/40 hover:border-yellow-400 hover:shadow-[0_0_12px_rgba(234,179,8,0.15)]',
+        'green-belt': 'border-green-500/40 hover:border-green-400 hover:shadow-[0_0_12px_rgba(34,197,94,0.15)]',
+        'black-belt': 'border-gray-600 hover:border-gray-400 hover:shadow-[0_0_12px_rgba(156,163,175,0.15)]',
+      },
+    },
+  },
+);
+
+const beltDotVariants = cva('w-4 h-4', {
+  variants: {
+    belt: {
+      'white-belt': 'bg-white border border-gray-600',
+      'yellow-belt': 'bg-yellow-500',
+      'green-belt': 'bg-green-500',
+      'black-belt': 'bg-gray-900 border border-gray-600',
+    },
+  },
+});
+
+interface Props {
+  name: string;
+  label: string;
+  description: string;
+  count: number;
+  href: string;
+  belt: VariantProps<typeof beltCardVariants>['belt'];
+  class?: string;
+}
+
+const { name, label, description, count, href, belt, class: className } = Astro.props;
+---
+
+<a
+  href={href}
+  class={cn(beltCardVariants({ belt }), className)}
+>
+  <div class="font-mono text-xs uppercase tracking-widest text-terminal-gray mb-2">{name}</div>
+  <div class="flex items-center gap-2 mb-3">
+    <div class={beltDotVariants({ belt })}></div>
+    <h3 class="font-sans font-semibold text-lg text-terminal-white">{label}</h3>
+  </div>
+  <p class="text-terminal-gray text-sm leading-relaxed">{description}</p>
+  <div class="mt-4 font-mono text-xs text-terminal-dim">{count} {count === 1 ? 'guide' : 'guides'}</div>
+</a>

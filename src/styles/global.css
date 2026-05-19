@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+@theme {
+  --color-terminal-black: #0A0A0A;
+  --color-terminal-dark: #1A1A1A;
+  --color-terminal-darker: #111111;
+  --color-terminal-green: #00FF41;
+  --color-terminal-dim: #00CC33;
+  --color-terminal-white: #E0E0E0;
+  --color-terminal-gray: #888888;
+  --color-terminal-error: #FF3333;
+  --color-terminal-warning: #FFB800;
+  --color-terminal-info: #00FFFF;
+
+  --font-family-sans: "Source Sans 3", system-ui, sans-serif;
+  --font-family-mono: "JetBrains Mono", monospace;
+}
