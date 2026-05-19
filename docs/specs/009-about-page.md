@@ -1,6 +1,6 @@
 # Spec 009: Página About
 
-**State:** draft
+**State:** done
 
 ## Context
 
@@ -19,7 +19,7 @@ Página estática `/about` con contenido sobre la motivación del proyecto. Dise
   - Secciones: motivación personal, filosofía de los cinturones, cómo usar el sitio
   - Diseño con elementos visuales decorativos (líneas de terminal, bloques de código estilizados, citas)
   - Usa `BaseLayout` para header/footer consistente con el resto del sitio
-- `src/components/Header.astro` — Agregar link "About" en la navegación principal
+- `src/components/Header.astro` — Agregar link "Sobre mí" en la navegación principal
 
 ## Excludes
 
@@ -35,12 +35,12 @@ Página estática `/about` con contenido sobre la motivación del proyecto. Dise
 
 ## Done
 
-- [ ] `/about` es accesible y renderiza correctamente
-- [ ] La página tiene un diseño creativo/distintivo (no genérico, con storytelling visual)
-- [ ] El link "About" aparece en el header de navegación principal
-- [ ] Usa `BaseLayout` para consistencia (Header + Footer)
-- [ ] `pnpm build` genera la ruta estáticamente
-- [ ] Responsive en mobile
+- [x] `/about` es accesible y renderiza correctamente
+- [x] La página tiene un diseño creativo/distintivo (no genérico, con storytelling visual)
+- [x] El link "Sobre mí" aparece en el header de navegación principal
+- [x] Usa `BaseLayout` para consistencia (Header + Footer)
+- [x] `pnpm build` genera la ruta estáticamente
+- [x] Responsive en mobile
 
 ## Technical Notes
 
