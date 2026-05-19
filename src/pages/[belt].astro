@@ -33,10 +33,39 @@ export const getStaticPaths = (async () => {
   });
 }) satisfies GetStaticPaths;
 
-const { belt, label, description, name, guides } = Astro.props;
+const { belt, label, description, name, guides, allBelts } = Astro.props;
 ---
 
 <BaseLayout title={`${label} — devBelts`} description={description} currentPath={`/${belt}`}>
+  <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-4">
+    <div class="flex flex-wrap gap-2">
+      {Object.entries(allBelts).map(([slug, data]) => {
+        const isActive = slug === belt;
+        const dot = slug === 'white-belt' ? 'bg-white border border-gray-600'
+          : slug === 'yellow-belt' ? 'bg-yellow-500'
+          : slug === 'green-belt' ? 'bg-green-500'
+          : 'bg-gray-900 border border-gray-600';
+
+        const common = `inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-mono border rounded`;
+
+        return isActive ? (
+          <span class={`${common} bg-terminal-dark border-terminal-green text-terminal-green`}>
+            <span class={`w-2 h-2 rounded-full ${dot}`}></span>
+            {data.name} · {data.label.split(' ')[0]}
+          </span>
+        ) : (
+          <a
+            href={`/${slug}`}
+            class={`${common} bg-terminal-dark border-terminal-dim text-terminal-gray hover:border-terminal-green hover:text-terminal-green transition-colors`}
+          >
+            <span class={`w-2 h-2 rounded-full ${dot}`}></span>
+            {data.name} · {data.label.split(' ')[0]}
+          </a>
+        );
+      })}
+    </div>
+  </nav>
+
   <header class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative">
     <div class="font-mono text-terminal-gray text-sm tracking-widest uppercase mb-2">
       {name} — {guides.length} {guides.length === 1 ? 'Guía' : 'Guías'}

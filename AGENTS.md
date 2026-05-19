@@ -57,6 +57,7 @@ docs/
 - **Content Collections** — toda guía debe tener schema Zod validado en `src/content.config.ts`
 - **Mínimo JavaScript** al cliente — usar Astro islands solo donde se necesite interactividad
 - **Accesibilidad** — semántica HTML correcta, aria labels donde aplique
+- **Playwright screenshots** — guardar PNGs en `.playwright-mcp/`, no en el project root
 
 ## TSDD Workflow
 
@@ -91,3 +92,4 @@ Este proyecto sigue Thin Spec Driven Development (TSDD):
 - Modificar `.gitignore` sin preguntar
 - Force-push o reescribir historial
 - Eliminar specs o ADRs existentes sin instrucción explícita
+- Marcar un spec como `done` sin que el usuario lo revise y lo diga explícitamente

@@ -93,6 +93,7 @@ This project follows Thin Spec Driven Development (TSDD):
 - Touch vendor/ or node_modules/ directly
 - Force-push or rewrite history
 - Delete existing specs or ADRs without explicit instruction
+- Mark a spec as `done` without the user reviewing it and explicitly saying so
 ```
 
 ### If AGENTS.md already exists
