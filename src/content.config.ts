@@ -16,7 +16,7 @@ const dateSchema = z.string().refine(
 );
 
 const guides = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/guides' }),
+  loader: glob({ pattern: '**/[^_]*.md', base: './src/content/guides' }),
   schema: z.object({
     title: z.string(),
     description: z.string(),

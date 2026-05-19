@@ -25,7 +25,7 @@
 - **Commits:** Inglés (Conventional Commits)
 - **Docs, specs, proposals:** Español
 - **Código fuente:** Inglés (variables, funciones, componentes)
-- **Contenido de guías:** Español
+- **Contenido de guías:** Español neutro. **Evitar el voceo** ("podés", "tenés", "hacé") — usar "puedes", "tienes", "haz". Ocasionalmente se permite una palabra chilena ("bacán", "al tiro", "fome"), pero sin exagerar.
 
 ## Folder Structure
 

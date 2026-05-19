@@ -1,24 +1,28 @@
 ---
 term: "Variable"
-definition: "Un contenedor con nombre que almacena un valor en memoria. En JavaScript moderno se declaran con `let` (reasignable) o `const` (no reasignable)."
+definition: "Un espacio con nombre en memoria donde se almacena un valor que puede cambiar durante la ejecución de un programa. Es como una caja etiquetada que guarda información."
 relatedGuides:
-  - white-belt/variables-and-types
-tags: [javascript, fundamentos]
-lastRevision: "2025-01-15"
+  - white-belt/tu-primer-programa-en-python
+tags: [python, fundamentos, datos]
+lastRevision: "2026-05-19"
 ---
 
-# Variable
+Las variables son el mecanismo fundamental para guardar y manipular datos en cualquier programa. En Python no necesitas declarar su tipo explícitamente — el lenguaje lo infiere del valor que le asignas.
 
-Una variable es un contenedor con nombre que almacena un valor en memoria del programa.
-
-## Ejemplo
-
-```js
-const name = "devBelts";  // no se puede reasignar
-let score = 0;            // se puede reasignar
-score = 10;               // válido
+```python
+nombre = "Ada"      # str
+edad = 25           # int
+precio = 19.99      # float
+activo = True       # bool
 ```
+
+## Reglas de nombrado
+
+- Pueden contener letras, números y guiones bajos
+- No pueden empezar con un número
+- Son sensibles a mayúsculas (`edad` ≠ `Edad`)
+- No pueden ser palabras reservadas del lenguaje (`if`, `while`, `print`, etc.)
 
 ## Ver también
 
-- [Variables y Tipos de Datos](/guides/white-belt/variables-and-types)
+- [Tu primer programa en Python](/guides/white-belt/tu-primer-programa-en-python)

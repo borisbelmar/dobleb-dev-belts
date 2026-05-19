@@ -1,0 +1,104 @@
+---
+interface Props {
+  headingId?: string;
+}
+---
+
+<nav id="toc" class="bg-terminal-dark border border-terminal-dim p-4">
+  <h3 class="font-mono text-sm uppercase tracking-widest text-terminal-gray mb-3">Contenido</h3>
+  <ul id="toc-list" class="space-y-1.5 text-sm">
+    <!-- Populated by JS -->
+  </ul>
+</nav>
+
+<style>
+  :global(.guide-content h2),
+  :global(.guide-content h3) {
+    scroll-margin-top: 100px;
+  }
+  :global(.guide-content) {
+    scroll-margin-top: 100px;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const mainContent = document.querySelector('main .guide-content');
+    if (!mainContent) return;
+
+    const headings = mainContent.querySelectorAll('h2, h3');
+    const tocList = document.getElementById('toc-list');
+    if (!tocList) return;
+
+    const introLi = document.createElement('li');
+    const introA = document.createElement('a');
+    introA.href = '#introduccion';
+    introA.textContent = 'Introducción';
+    introA.className = 'block py-0.5 transition-colors text-terminal-gray hover:text-terminal-green';
+    introA.addEventListener('click', (e) => {
+      e.preventDefault();
+      mainContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      history.pushState(null, '', '#introduccion');
+    });
+    introLi.appendChild(introA);
+    tocList.appendChild(introLi);
+
+    const items: { id: string; text: string; level: number; el: Element }[] = [];
+
+    headings.forEach((h, i) => {
+      const id = h.id || `heading-${i}`;
+      if (!h.id) h.id = id;
+      items.push({ id, text: h.textContent || '', level: h.tagName === 'H2' ? 2 : 3, el: h });
+
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.href = `#${id}`;
+      a.textContent = h.textContent || '';
+      a.className = `block py-0.5 transition-colors text-terminal-gray hover:text-terminal-green`;
+      if (h.tagName === 'H3') {
+        a.classList.add('ml-4', 'text-xs');
+      }
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        h.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        history.pushState(null, '', `#${id}`);
+      });
+      li.appendChild(a);
+      tocList.appendChild(li);
+    });
+
+    const links = tocList.querySelectorAll('a');
+    const introLink = links[0];
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            links.forEach((link) => {
+              link.classList.remove('text-terminal-green', 'font-semibold');
+              if (link.getAttribute('href') === `#${id}`) {
+                link.classList.add('text-terminal-green', 'font-semibold');
+              }
+            });
+          }
+        });
+      },
+      { rootMargin: '-80px 0px -60% 0px', threshold: 0 },
+    );
+
+    items.forEach((item) => observer.observe(item.el));
+
+    const topObserver = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          links.forEach((link) => link.classList.remove('text-terminal-green', 'font-semibold'));
+          introLink?.classList.add('text-terminal-green', 'font-semibold');
+        }
+      },
+      { rootMargin: '-80px 0px -60% 0px', threshold: 0 },
+    );
+
+    topObserver.observe(mainContent);
+  });
+</script>

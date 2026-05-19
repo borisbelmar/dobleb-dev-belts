@@ -2,6 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import TagList from '@/components/TagList.astro';
 import RelatedGuides from '@/components/RelatedGuides.astro';
+import TableOfContents from '@/components/TableOfContents.astro';
 import { getCollection, getEntry, render } from 'astro:content';
 import type { GetStaticPaths } from 'astro';
 
@@ -23,13 +24,6 @@ const guideId = `${belt}/${slug}`;
 const guide = (await getEntry('guides', guideId))!;
 
 const allGuides = await getCollection('guides');
-const beltGuides = allGuides
-  .filter((g) => g.data.belt === belt && g.data.published !== false)
-  .sort((a, b) => a.data.order - b.data.order);
-
-const currentIndex = beltGuides.findIndex((g) => g.id === guide.id);
-const prevGuide = currentIndex > 0 ? beltGuides[currentIndex - 1] : null;
-const nextGuide = currentIndex < beltGuides.length - 1 ? beltGuides[currentIndex + 1] : null;
 
 const relatedGuides = allGuides
   .filter(
@@ -60,14 +54,14 @@ const { Content } = await render(guide);
       <span class="text-terminal-dim">{guide.data.title}</span>
     </nav>
 
-    <header class="mb-8 relative">
+    <header class="mb-8 relative pt-10">
       <span class="font-mono text-xs text-terminal-dim bg-terminal-darker px-2 py-0.5 absolute top-0 right-0">
         Última revisión: {guide.data.lastRevision}
       </span>
-      <h1 class="font-mono text-3xl sm:text-4xl font-bold text-terminal-white tracking-tight mb-4">
+      <h1 class="font-mono text-3xl sm:text-4xl font-bold text-terminal-white tracking-tight mb-2">
         {guide.data.title}
       </h1>
-      <p class="text-terminal-gray text-lg leading-relaxed">{guide.data.description}</p>
+      <p class="text-terminal-gray text-sm leading-relaxed">{guide.data.description}</p>
       <div class="mt-4">
         <TagList tags={guide.data.tags} />
       </div>
@@ -81,33 +75,8 @@ const { Content } = await render(guide);
       </main>
 
       <aside class="lg:col-span-1">
-        <div class="sticky top-8 space-y-6">
-          <nav class="bg-terminal-dark border border-terminal-dim p-4">
-            <h3 class="font-mono text-sm uppercase tracking-widest text-terminal-gray mb-3">Navegación</h3>
-            {prevGuide && (
-              <a
-                href={`/guides/${prevGuide.id}`}
-                class="block mb-3 group"
-              >
-                <div class="font-mono text-xs text-terminal-dim">← Anterior</div>
-                <div class="font-sans text-sm text-terminal-white group-hover:text-terminal-green transition-colors">
-                  {prevGuide.data.title}
-                </div>
-              </a>
-            )}
-            {nextGuide && (
-              <a
-                href={`/guides/${nextGuide.id}`}
-                class="block group"
-              >
-                <div class="font-mono text-xs text-terminal-dim">Siguiente →</div>
-                <div class="font-sans text-sm text-terminal-white group-hover:text-terminal-green transition-colors">
-                  {nextGuide.data.title}
-                </div>
-              </a>
-            )}
-          </nav>
-
+        <div class="sticky top-24 space-y-6">
+          <TableOfContents />
           <RelatedGuides guides={relatedGuides} />
         </div>
       </aside>
