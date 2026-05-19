@@ -4,6 +4,7 @@ definition: "Un contenedor con nombre que almacena un valor en memoria. En JavaS
 relatedGuides:
   - white-belt/variables-and-types
 tags: [javascript, fundamentos]
+lastRevision: "2025-01-15"
 ---
 
 # Variable

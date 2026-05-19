@@ -51,6 +51,7 @@ const { belt, label, description, name, guides } = Astro.props;
           title={guide.data.title}
           description={guide.data.description}
           tags={guide.data.tags}
+          lastRevision={guide.data.lastRevision}
           href={`/guides/${guide.id}`}
         />
       ))}

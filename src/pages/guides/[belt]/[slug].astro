@@ -49,21 +49,6 @@ const { Content } = await render(guide);
 ---
 
 <BaseLayout title={`${guide.data.title} — devBelts`} description={guide.data.description}>
-  <nav class="border-b border-terminal-dim bg-terminal-darker">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16">
-        <a href="/" class="font-mono font-bold text-lg tracking-tight">
-          <span class="text-terminal-green">$</span> devBelts
-        </a>
-        <div class="hidden md:flex items-center gap-6 font-mono text-sm">
-          <a href={`/${guide.data.belt}`} class="text-terminal-white hover:text-terminal-dim transition-colors">
-            {guide.data.belt.replace('-belt', ' belt')}
-          </a>
-        </div>
-      </div>
-    </div>
-  </nav>
-
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <nav class="font-mono text-xs text-terminal-gray mb-6">
       <a href="/" class="hover:text-terminal-green transition-colors">home</a>
@@ -75,7 +60,10 @@ const { Content } = await render(guide);
       <span class="text-terminal-dim">{guide.data.title}</span>
     </nav>
 
-    <header class="mb-8">
+    <header class="mb-8 relative">
+      <span class="font-mono text-xs text-terminal-dim bg-terminal-darker px-2 py-0.5 absolute top-0 right-0">
+        Última revisión: {guide.data.lastRevision}
+      </span>
       <h1 class="font-mono text-3xl sm:text-4xl font-bold text-terminal-white tracking-tight mb-4">
         {guide.data.title}
       </h1>

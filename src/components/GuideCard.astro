@@ -5,21 +5,25 @@ interface Props {
   title: string;
   description: string;
   tags: string[];
+  lastRevision: string;
   href: string;
   class?: string;
 }
 
-const { title, description, tags, href, class: className } = Astro.props;
+const { title, description, tags, lastRevision, href, class: className } = Astro.props;
 ---
 
 <a
   href={href}
   class={cn(
-    'block bg-terminal-dark border border-terminal-dim p-6 transition-all',
+    'block bg-terminal-dark border border-terminal-dim p-6 transition-all relative',
     'hover:border-terminal-green hover:shadow-[0_0_12px_rgba(0,255,65,0.15)] hover:-translate-y-0.5',
     className,
   )}
 >
+  <span class="font-mono text-xs text-terminal-dim bg-terminal-darker px-2 py-0.5 absolute top-0 right-0 rounded-bl">
+    {lastRevision}
+  </span>
   <h3 class="font-sans font-semibold text-lg text-terminal-white mb-2">{title}</h3>
   <p class="text-terminal-gray text-sm leading-relaxed mb-4">{description}</p>
   {tags.length > 0 && (

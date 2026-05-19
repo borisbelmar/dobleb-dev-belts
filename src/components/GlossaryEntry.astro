@@ -10,22 +10,26 @@ interface Props {
   term: string;
   definition: string;
   tags: string[];
+  lastRevision: string;
   relatedGuides: RelatedGuide[];
   slug: string;
   class?: string;
 }
 
-const { term, definition, tags, relatedGuides, slug, class: className } = Astro.props;
+const { term, definition, tags, lastRevision, relatedGuides, slug, class: className } = Astro.props;
 ---
 
 <a
   href={`/glossary/${slug}`}
   class={cn(
-    'block bg-terminal-dark border border-terminal-dim p-6 transition-all',
+    'block bg-terminal-dark border border-terminal-dim p-6 transition-all relative',
     'hover:border-terminal-green hover:shadow-[0_0_12px_rgba(0,255,65,0.15)] hover:-translate-y-0.5',
     className,
   )}
 >
+  <span class="font-mono text-xs text-terminal-dim bg-terminal-darker px-2 py-0.5 absolute top-0 right-0 rounded-bl">
+    {lastRevision}
+  </span>
   <h3 class="font-mono font-semibold text-lg text-terminal-white mb-2">{term}</h3>
   <p class="text-terminal-gray text-sm leading-relaxed mb-4">{definition}</p>
   {relatedGuides.length > 0 && (

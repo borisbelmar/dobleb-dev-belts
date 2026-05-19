@@ -5,6 +5,7 @@ belt: white-belt
 tags: [javascript, fundamentos, variables]
 order: 1
 published: true
+lastRevision: "2025-01-15"
 ---
 
 # Variables y Tipos de Datos

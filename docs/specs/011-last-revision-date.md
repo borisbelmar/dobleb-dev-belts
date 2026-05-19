@@ -1,6 +1,6 @@
 # Spec 011: Last Revision Date
 
-**State:** draft
+**State:** done
 
 ## Context
 
