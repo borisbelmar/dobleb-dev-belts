@@ -1,0 +1,128 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import TagList from '@/components/TagList.astro';
+import RelatedGuides from '@/components/RelatedGuides.astro';
+import { getCollection, getEntry, render } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+
+export const getStaticPaths = (async () => {
+  const guides = await getCollection('guides');
+
+  return guides
+    .filter((g) => g.data.published !== false)
+    .map((guide) => {
+      const slug = guide.id.split('/').pop()!;
+      return {
+        params: { belt: guide.data.belt, slug },
+      };
+    });
+}) satisfies GetStaticPaths;
+
+const { belt, slug } = Astro.params;
+const guideId = `${belt}/${slug}`;
+const guide = (await getEntry('guides', guideId))!;
+
+const allGuides = await getCollection('guides');
+const beltGuides = allGuides
+  .filter((g) => g.data.belt === belt && g.data.published !== false)
+  .sort((a, b) => a.data.order - b.data.order);
+
+const currentIndex = beltGuides.findIndex((g) => g.id === guide.id);
+const prevGuide = currentIndex > 0 ? beltGuides[currentIndex - 1] : null;
+const nextGuide = currentIndex < beltGuides.length - 1 ? beltGuides[currentIndex + 1] : null;
+
+const relatedGuides = allGuides
+  .filter(
+    (g) =>
+      g.id !== guide.id &&
+      g.data.published !== false &&
+      g.data.tags.some((tag) => guide.data.tags.includes(tag)),
+  )
+  .slice(0, 5)
+  .map((g) => ({
+    title: g.data.title,
+    description: g.data.description,
+    id: g.id,
+  }));
+
+const { Content } = await render(guide);
+---
+
+<BaseLayout title={`${guide.data.title} — devBelts`} description={guide.data.description}>
+  <nav class="border-b border-terminal-dim bg-terminal-darker">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <a href="/" class="font-mono font-bold text-lg tracking-tight">
+          <span class="text-terminal-green">$</span> devBelts
+        </a>
+        <div class="hidden md:flex items-center gap-6 font-mono text-sm">
+          <a href={`/${guide.data.belt}`} class="text-terminal-white hover:text-terminal-dim transition-colors">
+            {guide.data.belt.replace('-belt', ' belt')}
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <nav class="font-mono text-xs text-terminal-gray mb-6">
+      <a href="/" class="hover:text-terminal-green transition-colors">home</a>
+      <span class="mx-2">/</span>
+      <a href={`/${guide.data.belt}`} class="hover:text-terminal-green transition-colors">
+        {guide.data.belt.replace('-belt', ' belt')}
+      </a>
+      <span class="mx-2">/</span>
+      <span class="text-terminal-dim">{guide.data.title}</span>
+    </nav>
+
+    <header class="mb-8">
+      <h1 class="font-mono text-3xl sm:text-4xl font-bold text-terminal-white tracking-tight mb-4">
+        {guide.data.title}
+      </h1>
+      <p class="text-terminal-gray text-lg leading-relaxed">{guide.data.description}</p>
+      <div class="mt-4">
+        <TagList tags={guide.data.tags} />
+      </div>
+    </header>
+
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      <main class="lg:col-span-3">
+        <div class="guide-content bg-terminal-dark p-6 sm:p-8">
+          <Content />
+        </div>
+      </main>
+
+      <aside class="lg:col-span-1">
+        <div class="sticky top-8 space-y-6">
+          <nav class="bg-terminal-dark border border-terminal-dim p-4">
+            <h3 class="font-mono text-sm uppercase tracking-widest text-terminal-gray mb-3">Navegación</h3>
+            {prevGuide && (
+              <a
+                href={`/guides/${prevGuide.id}`}
+                class="block mb-3 group"
+              >
+                <div class="font-mono text-xs text-terminal-dim">← Anterior</div>
+                <div class="font-sans text-sm text-terminal-white group-hover:text-terminal-green transition-colors">
+                  {prevGuide.data.title}
+                </div>
+              </a>
+            )}
+            {nextGuide && (
+              <a
+                href={`/guides/${nextGuide.id}`}
+                class="block group"
+              >
+                <div class="font-mono text-xs text-terminal-dim">Siguiente →</div>
+                <div class="font-sans text-sm text-terminal-white group-hover:text-terminal-green transition-colors">
+                  {nextGuide.data.title}
+                </div>
+              </a>
+            )}
+          </nav>
+
+          <RelatedGuides guides={relatedGuides} />
+        </div>
+      </aside>
+    </div>
+  </div>
+</BaseLayout>

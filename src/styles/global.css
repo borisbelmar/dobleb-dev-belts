@@ -15,3 +15,209 @@
   --font-family-sans: "Source Sans 3", system-ui, sans-serif;
   --font-family-mono: "JetBrains Mono", monospace;
 }
+
+/*
+ * Shiki syntax highlighting — css-variables theme
+ * Color palette matching terminal aesthetic
+ */
+:root {
+  --astro-code-color-text: #E0E0E0;
+  --astro-code-color-background: #111111;
+  --astro-code-foreground: #E0E0E0;
+  --astro-code-background: #111111;
+  --astro-code-token-constant: #00FFFF;
+  --astro-code-token-string: #FFB800;
+  --astro-code-token-comment: #666666;
+  --astro-code-token-keyword: #00FF41;
+  --astro-code-token-parameter: #E0E0E0;
+  --astro-code-token-function: #00CC33;
+  --astro-code-token-string-expression: #FFB800;
+  --astro-code-token-punctuation: #888888;
+  --astro-code-token-link: #00FF41;
+}
+
+/*
+ * Terminal typography for guide content
+ * No prose plugin needed — custom styles match the hacker/GLITCH aesthetic
+ */
+.guide-content {
+  color: var(--color-terminal-white);
+  line-height: 1.75;
+  font-size: 1.0625rem;
+}
+
+.guide-content h1,
+.guide-content h2,
+.guide-content h3,
+.guide-content h4,
+.guide-content h5,
+.guide-content h6 {
+  font-family: var(--font-family-mono);
+  color: var(--color-terminal-white);
+  font-weight: 700;
+  line-height: 1.3;
+  margin-top: 2em;
+  margin-bottom: 0.75em;
+}
+
+.guide-content h1 { font-size: 1.75rem; }
+.guide-content h2 { font-size: 1.375rem; }
+.guide-content h3 { font-size: 1.125rem; }
+
+.guide-content h1:first-child,
+.guide-content h2:first-child {
+  margin-top: 0;
+}
+
+.guide-content p {
+  margin-bottom: 1.25em;
+}
+
+.guide-content a {
+  color: var(--color-terminal-green);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: color-mix(in srgb, var(--color-terminal-green) 40%, transparent);
+  transition: text-decoration-color 0.15s;
+}
+
+.guide-content a:hover {
+  text-decoration-color: var(--color-terminal-green);
+}
+
+.guide-content strong {
+  color: var(--color-terminal-white);
+  font-weight: 700;
+}
+
+.guide-content em {
+  font-style: italic;
+}
+
+.guide-content ul,
+.guide-content ol {
+  margin-bottom: 1.25em;
+  padding-left: 1.5em;
+}
+
+.guide-content ul {
+  list-style-type: disc;
+}
+
+.guide-content ol {
+  list-style-type: decimal;
+}
+
+.guide-content li {
+  margin-bottom: 0.35em;
+}
+
+.guide-content li::marker {
+  color: var(--color-terminal-green);
+}
+
+.guide-content hr {
+  border: none;
+  border-top: 1px solid var(--color-terminal-dim);
+  margin: 2em 0;
+  opacity: 0.3;
+}
+
+.guide-content blockquote {
+  border-left: 3px solid var(--color-terminal-green);
+  padding-left: 1em;
+  margin: 1.5em 0;
+  color: var(--color-terminal-gray);
+  font-style: italic;
+}
+
+.guide-content blockquote p {
+  margin-bottom: 0.5em;
+}
+
+.guide-content code {
+  font-family: var(--font-family-mono);
+  font-size: 0.875em;
+  background: var(--color-terminal-darker);
+  color: var(--color-terminal-green);
+  padding: 0.15em 0.4em;
+  border-radius: 2px;
+}
+
+.guide-content pre {
+  margin: 1.5em 0;
+  border: 1px solid color-mix(in srgb, var(--color-terminal-dim) 20%, transparent);
+  border-radius: 0;
+  overflow-x: auto;
+  padding: 0;
+  position: relative;
+}
+
+.guide-content pre::before {
+  content: attr(data-language);
+  display: block;
+  font-family: var(--font-family-mono);
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: color-mix(in srgb, var(--color-terminal-white) 5%, var(--color-terminal-darker));
+  color: var(--color-terminal-gray);
+  padding: 0.5em 1em;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-terminal-dim) 15%, transparent);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.guide-content pre code {
+  background: none;
+  color: inherit;
+  padding: 1em;
+  display: block;
+  font-size: 0.8125rem;
+  line-height: 1.65;
+}
+
+.guide-content :not(pre) > code {
+  white-space: nowrap;
+}
+
+.guide-content img {
+  max-width: 100%;
+  height: auto;
+  margin: 1.5em auto;
+  display: block;
+  border: 1px solid color-mix(in srgb, var(--color-terminal-dim) 20%, transparent);
+}
+
+.guide-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5em 0;
+  font-size: 0.9375rem;
+}
+
+.guide-content th,
+.guide-content td {
+  border: 1px solid color-mix(in srgb, var(--color-terminal-dim) 20%, transparent);
+  padding: 0.5em 0.75em;
+  text-align: left;
+}
+
+.guide-content th {
+  font-family: var(--font-family-mono);
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-terminal-gray);
+  background: var(--color-terminal-darker);
+  font-weight: 600;
+}
+
+.guide-content td {
+  color: var(--color-terminal-white);
+}
+
+.guide-content tr:nth-child(even) td {
+  background: color-mix(in srgb, var(--color-terminal-white) 3%, transparent);
+}

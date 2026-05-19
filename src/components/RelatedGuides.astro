@@ -1,0 +1,40 @@
+---
+import { cn } from '../lib/utils';
+
+interface Guide {
+  title: string;
+  description: string;
+  id: string;
+}
+
+interface Props {
+  guides: Guide[];
+  class?: string;
+}
+
+const { guides, class: className } = Astro.props;
+---
+
+{guides.length > 0 && (
+  <div class={cn('space-y-3', className)}>
+    <h3 class="font-mono text-sm uppercase tracking-widest text-terminal-gray">Guías relacionadas</h3>
+    <ul class="space-y-2">
+      {guides.map((guide) => {
+        const belt = guide.id.split('/')[0];
+        return (
+          <li>
+            <a
+              href={`/guides/${guide.id}`}
+              class="block group"
+            >
+              <div class="font-sans font-medium text-terminal-white group-hover:text-terminal-green transition-colors">
+                {guide.title}
+              </div>
+              <div class="font-mono text-xs text-terminal-dim">{belt}</div>
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+  </div>
+)}
