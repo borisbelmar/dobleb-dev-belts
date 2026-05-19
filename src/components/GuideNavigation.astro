@@ -1,0 +1,65 @@
+---
+import { getCollection } from 'astro:content';
+
+interface Props {
+  belt: string;
+  currentSlug: string;
+}
+
+const { belt, currentSlug } = Astro.props;
+
+const allGuides = await getCollection('guides');
+const beltGuides = allGuides
+  .filter((g) => g.data.belt === belt && g.data.published !== false)
+  .sort((a, b) => a.data.order - b.data.order);
+
+const currentIndex = beltGuides.findIndex((g) => g.id === `${belt}/${currentSlug}`);
+const prevGuide = currentIndex > 0 ? beltGuides[currentIndex - 1] : null;
+const nextGuide = currentIndex < beltGuides.length - 1 ? beltGuides[currentIndex + 1] : null;
+---
+
+<nav class="flex flex-col sm:flex-row gap-4 pt-8 mt-8 border-t border-terminal-dim">
+  {prevGuide ? (
+    <a
+      href={`/guides/${prevGuide.id}`}
+      class="flex-1 group bg-terminal-dark border border-terminal-dim p-4 hover:border-terminal-green transition-colors"
+    >
+      <div class="font-mono text-xs text-terminal-dim mb-1">← Anterior</div>
+      <div class="font-mono text-sm text-terminal-white group-hover:text-terminal-green transition-colors">
+        {prevGuide.data.title}
+      </div>
+    </a>
+  ) : (
+    <a
+      href={`/${belt}`}
+      class="flex-1 group bg-terminal-dark border border-terminal-dim p-4 hover:border-terminal-green transition-colors"
+    >
+      <div class="font-mono text-xs text-terminal-dim mb-1">← Volver</div>
+      <div class="font-mono text-sm text-terminal-white group-hover:text-terminal-green transition-colors">
+        {belt.replace('-belt', ' belt')}
+      </div>
+    </a>
+  )}
+
+  {nextGuide ? (
+    <a
+      href={`/guides/${nextGuide.id}`}
+      class="flex-1 group bg-terminal-dark border border-terminal-dim p-4 hover:border-terminal-green transition-colors text-right sm:ml-4"
+    >
+      <div class="font-mono text-xs text-terminal-dim mb-1">Siguiente →</div>
+      <div class="font-mono text-sm text-terminal-white group-hover:text-terminal-green transition-colors">
+        {nextGuide.data.title}
+      </div>
+    </a>
+  ) : (
+    <a
+      href={`/${belt}`}
+      class="flex-1 group bg-terminal-dark border border-terminal-dim p-4 hover:border-terminal-green transition-colors text-right sm:ml-4"
+    >
+      <div class="font-mono text-xs text-terminal-dim mb-1">Volver →</div>
+      <div class="font-mono text-sm text-terminal-white group-hover:text-terminal-green transition-colors">
+        {belt.replace('-belt', ' belt')}
+      </div>
+    </a>
+  )}
+</nav>

@@ -3,6 +3,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import TagList from '@/components/TagList.astro';
 import RelatedGuides from '@/components/RelatedGuides.astro';
 import TableOfContents from '@/components/TableOfContents.astro';
+import GuideNavigation from '@/components/GuideNavigation.astro';
 import { getCollection, getEntry, render } from 'astro:content';
 import type { GetStaticPaths } from 'astro';
 
@@ -71,6 +72,7 @@ const { Content } = await render(guide);
       <main class="lg:col-span-3">
         <div class="guide-content bg-terminal-dark p-6 sm:p-8">
           <Content />
+          <GuideNavigation belt={guide.data.belt} currentSlug={slug!} />
         </div>
       </main>
 
