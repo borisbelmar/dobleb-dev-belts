@@ -26,10 +26,6 @@ TSDD se creó con un objetivo claro: **hacer la adopción de specs simple y prá
 
 TSDD toma prestado de **Lean Thinking**: eliminar desperdicio, entregar valor temprano, decidir lo más tarde posible pero responsablemente. Un spec lleno de verbosidad de negocio es desperdicio. Un spec lleno de trivia de implementación también lo es. Una decisión que nadie registró es un incidente futuro.
 
-### La premisa central
-
-> **Un spec existe para darle a un agente — humano o IA — todo lo que necesita para ejecutar una tarea correctamente, sin ambigüedad y sin preguntar dos veces.**
-
 ### Principios fundamentales
 
 1. **Human in the loop — siempre.** El desarrollador no es un aprobador al final. Es un colaborador en cada etapa. El agente ejecuta; el humano dirige, refina y valida.
