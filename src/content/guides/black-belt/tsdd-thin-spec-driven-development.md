@@ -96,41 +96,6 @@ El harness no es parte del Spec. Es parte del entorno operativo del agente — d
 
 *El workflow TSDD: 7 etapas que guían desde la idea hasta el merge. El Spec es el centro — todo fluye hacia él y desde él.*
 
-```
-         [Human + Agent]
-               │
-            Proposal
-               │
-               ├── ¿Involucra equipo o stakeholders?
-               │          │
-               │        SÍ → [Human + Agent] User Stories
-               │          │
-               │         NO ──────────────────────┐
-               │                                  │
-               ──────────────────────────────────┘
-                                  │
-                          [Human + Agent]
-                              Spec
-                         (iterar hasta
-                          que sea inequívoco)
-                                  │
-                          [Human + Agent]
-                           Implementación
-                          (El spec está vivo —
-                        redirigir, completar,
-                          documentar inline)
-                                  │
-                          [Human + Agent]
-                             Artefactos
-                     (generar, revisar, iterar)
-                                  │
-                            [Human]
-                             Commit
-                                  │
-                            [Human]
-                           Merge Request
-```
-
 ---
 
 ## Las etapas
